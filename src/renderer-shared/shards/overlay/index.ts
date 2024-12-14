@@ -32,4 +32,8 @@ export class OverlayRenderer implements IAkariShardInitDispose {
     return this._ipc.call(MAIN_SHARD_NAMESPACE, 'overlay/clickThrough', value)
   }
 
+  updateURL(url: string) {
+    return this._ipc.call(MAIN_SHARD_NAMESPACE, 'overlay/updateURL', url)
+  }
+
 }

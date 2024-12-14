@@ -74,6 +74,7 @@ const handleShowAuxWindow = () => {
 
 const handleShowOverlay = () => {
   overlay.show()
+  overlay.updateURL('ongoing-game')
 }
 
 const handleToGithub = () => {

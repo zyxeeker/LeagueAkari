@@ -52,11 +52,14 @@ export class OverlayMain implements IAkariShardInitDispose {
     this._ipc.onCall(OverlayMain.id, 'overlay/clickThrough', (value: boolean) => {
       this._toggleClickThrough(value);
     })
+    this._ipc.onCall(OverlayMain.id, 'overlay/updateURL', (value: string) => {
+      this.updateURL(value);
+    })
   }
 
   private _create() {
     this._window = new BrowserWindow({
-      fullscreen: true,
+      // fullscreen: true,
       resizable: false,
       frame: false,
       title: 'Akari Overlay',
@@ -65,6 +68,7 @@ export class OverlayMain implements IAkariShardInitDispose {
       minimizable: false,
       show: false,
       icon,
+      focusable: false,
       skipTaskbar: false,
       transparent: true,
       backgroundColor: '#00000000',
@@ -88,7 +92,7 @@ export class OverlayMain implements IAkariShardInitDispose {
       this._window.loadFile(join(__dirname, '../renderer/overlay-window.html'))
     }
     try {
-      this._inst.enable(this._window.getNativeWindowHandle())
+      this._log.info(this._inst.enable(this._window.getNativeWindowHandle()))
     } catch(err) {
       this._log.error(err)
     }
@@ -138,6 +142,15 @@ export class OverlayMain implements IAkariShardInitDispose {
 
   toggleDevTools() {
     this._window?.webContents.toggleDevTools()
+  }
+
+  updateURL(url: string) {
+    if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+      this._window?.loadURL(`${process.env['ELECTRON_RENDERER_URL']}/main-window.html#${url}/overlay`)
+    } else {
+      this._window?.loadFile(join(__dirname, `../renderer/main-window.html#${url}/overlay`))
+    }
+    // this._window?.loadURL(url);
   }
 
 }

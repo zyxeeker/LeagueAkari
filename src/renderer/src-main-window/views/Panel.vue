@@ -1,6 +1,6 @@
 <template>
   <div class="panel">
-    <div class="left-side-content">
+    <div class="left-side-content" v-if="!isOverlay">
       <SidebarMenu
         class="sidebar-menu"
         :items="menu"
@@ -54,6 +54,17 @@ const route = useRoute()
 const shouldShowOngoingGameBadge = ref(false)
 const isInOngoingStage = computed(() => {
   return ogs.queryStage.phase !== 'unavailable'
+})
+
+const isOverlay = computed(() => {
+  if (route.name !== 'ongoing-game') {
+    return false
+  }
+  const mode = route.params.mode as string
+  if (!mode) {
+    return false
+  }
+  return true
 })
 
 watch(

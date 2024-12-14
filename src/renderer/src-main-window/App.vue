@@ -17,7 +17,7 @@
         }"
       ></div>
     </Transition>
-    <MainWindowTitleBar />
+    <MainWindowTitleBar v-if="!isOverlay" />
     <div id="app-content"><RouterView /></div>
   </div>
 </template>
@@ -34,8 +34,9 @@ import { greeting } from '@renderer-shared/utils/greeting'
 import { KYOKO_MODE_KEY_SEQUENCE, LEAGUE_AKARI_GITHUB } from '@shared/constants/common'
 import { useTranslation } from 'i18next-vue'
 import { useMessage, useNotification } from 'naive-ui'
-import { provide, ref, watchEffect } from 'vue'
+import { provide, ref, watchEffect, computed } from 'vue'
 import { h } from 'vue'
+import { useRoute } from 'vue-router'
 
 import AnnouncementModal from './components/AnnouncementModal.vue'
 import DeclarationModal from './components/DeclarationModal.vue'
@@ -56,6 +57,19 @@ const su = useInstance<SelfUpdateRenderer>('self-update-renderer')
 const app = useInstance<AppCommonRenderer>('app-common-renderer')
 
 const { t } = useTranslation()
+
+const route = useRoute()
+
+const isOverlay = computed(() => {
+  if (route.name !== 'ongoing-game') {
+    return false
+  }
+  const mode = route.params.mode as string
+  if (!mode) {
+    return false
+  }
+  return true
+})
 
 greeting(as.version)
 
