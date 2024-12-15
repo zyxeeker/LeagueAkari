@@ -34,6 +34,7 @@ export class OverlayMain implements IAkariShardInitDispose {
 
   async onInit() {
     this._create()
+    // this.toggleDevTools()
     this._initShortCuts()
     this._timer = setInterval(()=>{
       if (!GameClientMain.isGameClientForeground() && this.visible) {
@@ -57,7 +58,6 @@ export class OverlayMain implements IAkariShardInitDispose {
       icon,
       focusable: false,
       skipTaskbar: true,
-      transparent: true,
       backgroundColor: '#00000000',
       webPreferences: {
         preload: join(__dirname, '../preload/index.js'),
