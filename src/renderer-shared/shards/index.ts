@@ -1,3 +1,10 @@
+/*
+ * @Author: zyxeeker zyxeeker@gmail.com
+ * @Date: 2024-12-06 21:06:55
+ * @LastEditors: zyxeeker zyxeeker@gmail.com
+ * @LastEditTime: 2024-12-15 20:34:49
+ * @Description: 
+ */
 import { AkariManager, AkariShardConstructor } from '@shared/akari-shard/manager'
 import { App, getCurrentInstance } from 'vue'
 

@@ -30,16 +30,6 @@
       </template>
       {{ t('CommonButtons.auxWindow') }}
     </NTooltip>
-    <NTooltip :z-index="TITLE_BAR_TOOLTIP_Z_INDEX">
-      <template #trigger>
-        <div class="common-button-outer" @click="handleShowOverlay">
-          <div class="common-button-inner">
-            <NIcon><SeparateWindow20Filled /></NIcon>
-          </div>
-        </div>
-      </template>
-      {{ t('CommonButtons.overlay') }}
-    </NTooltip>
   </div>
 </template>
 
@@ -49,20 +39,16 @@ import { WindowManagerRenderer } from '@renderer-shared/shards/window-manager'
 import { useWindowManagerStore } from '@renderer-shared/shards/window-manager/store'
 import { LEAGUE_AKARI_GITHUB } from '@shared/constants/common'
 import { Notification as NotificationIcon } from '@vicons/carbon'
-import { Window24Filled as Window24FilledIcon, 
-  PanelSeparateWindow20Filled as SeparateWindow20Filled} from '@vicons/fluent'
+import { Window24Filled as Window24FilledIcon } from '@vicons/fluent'
 import { LogoGithub } from '@vicons/ionicons5'
 import { NIcon, NTooltip } from 'naive-ui'
 import { inject } from 'vue'
 import { useTranslation } from 'i18next-vue'
-import { OverlayRenderer } from '@renderer-shared/shards/overlay'
-
 
 const { t } = useTranslation()
 
 const wms = useWindowManagerStore()
 const wm = useInstance<WindowManagerRenderer>('window-manager-renderer')
-const overlay = useInstance<OverlayRenderer>('overlay-renderer')
 
 const { openAnnouncementModal } = inject('app') as any
 
@@ -70,11 +56,6 @@ const TITLE_BAR_TOOLTIP_Z_INDEX = 75000
 
 const handleShowAuxWindow = () => {
   wm.showAuxWindow()
-}
-
-const handleShowOverlay = () => {
-  overlay.show()
-  overlay.updateURL('ongoing-game')
 }
 
 const handleToGithub = () => {
